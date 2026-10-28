@@ -1,0 +1,7 @@
+services:
+  # Ứng dụng web có lỗ hổng (không có WAF) - http://localhost:3000
+  juice-shop:
+    image: bkimminich/juice-shop
+    container_name: juice-shop
+    ports:
+      - "3000:3000"
