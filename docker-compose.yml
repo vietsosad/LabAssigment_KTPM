@@ -5,3 +5,18 @@ services:
     container_name: juice-shop
     ports:
       - "3000:3000"
+
+  # Nginx + ModSecurity + OWASP CRS đứng trước Juice Shop - http://localhost:8080
+  waf:
+    image: owasp/modsecurity-crs:nginx-alpine
+    container_name: waf
+    depends_on:
+      - juice-shop
+    environment:
+      BACKEND: http://juice-shop:3000
+      PORT: "8080"
+      MODSEC_RULE_ENGINE: "On"
+      PARANOIA: "1"
+      BLOCKING_PARANOIA: "1"
+    ports:
+      - "8080:8080"
